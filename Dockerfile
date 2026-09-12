@@ -1,17 +1,6 @@
-# API
-FROM node:12
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn
+FROM node:20-bookworm-slim
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
 COPY . .
-EXPOSE 4000
-CMD ["yarn", "api:dev"]
-
-# Bot
-FROM node:12
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn
-COPY . .
-CMD ["yarn", "bot:prod"]
-
+CMD ["node", "index.js"]
